@@ -28,32 +28,31 @@
             <form method="post">
                 <div class="form-group">
                     <label for="text">Enter text</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" name="text" rows="3">{{text}}</textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="text" rows="10">{{text}}</textarea>
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="show_name" value=1{%if show_name %} checked {% endif %}>
                     <label class="form-check-label" for="exampleCheck1">Show NER Tag</label>
                 </div>
                 <div class="float-right">
-                      <button type="submit" class="btn btn-success ">Identify Named Entity</button>
-                  
+                    <button type="submit" class="btn btn-success ">Identify Named Entity</button>
                 </div>
-
-            
             </form>
         </div>
         {%if result %}
-        <div class="row">
-            <div class="{%if show_name %} col-md-12 {%else%} col-md-10{%endif%} col-sm-12">
-                <div class="card mb-5 mt-5 shadow-sm">
-                    <h4>Result of Data</h4>
-                    {{ result|safe }}
+        <div class="row p-1">
+            <div class="p-3">
+                <div class="card mb-5 p-1 shadow-sm">
+                    <div class="p-3">
+                        <h4 class>Result:</h4>
+                        {{ result|safe }}
+                    </div>
                 </div>
             </div>
             {%endif%}
-            {%if not show_name %}
-            <div class=" col-lg-2 col-md-12 col-sm-12">
-                <div class="card mb-10 mt-10 shadow-sm">
+            {%if text and not show_name %}
+            <div class=" col-lg-3 col-md-4 col-sm-6 p-3">
+                <div class="card shadow-sm">
                     <table>
                         <tbody>
                             <tr>
