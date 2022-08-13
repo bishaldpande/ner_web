@@ -16,3 +16,7 @@ def hello_world():
         result = predict(text, preprocess)
 
     return render_template("index.html", text=text, result=result, show_name=show_name)
+
+
+if __name__ == "__main__":
+    app.run()
