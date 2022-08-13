@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nepali NER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    {%if not show_name %}
+    <style type="text/css">
+    span {
+        display: none;
+    }
+    </style>
+    {%endif%}
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container bg-light">
+        <h1>Nepali Named Entity Recognition App</h1>
+        <div class="col-md-12 mb-5">
+            <form method="post">
+                <div class="form-group">
+                    <label for="text">Enter text</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="text" rows="3">{{text}}</textarea>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="show_name" value=1{%if show_name %} checked {% endif %}>
+                    <label class="form-check-label" for="exampleCheck1">Show NER Tag</label>
+                </div>
+                <div class="float-right">
+                      <button type="submit" class="btn btn-success ">Identify Named Entity</button>
+                  
+                </div>
+
+            
+            </form>
+        </div>
+        {%if result %}
+        <div class="row">
+            <div class="{%if show_name %} col-md-12 {%else%} col-md-10{%endif%} col-sm-12">
+                <div class="card mb-5 mt-5 shadow-sm">
+                    <h4>Result of Data</h4>
+                    {{ result|safe }}
+                </div>
+            </div>
+            {%endif%}
+            {%if not show_name %}
+            <div class=" col-lg-2 col-md-12 col-sm-12">
+                <div class="card mb-10 mt-10 shadow-sm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="color-box" width="30px" bgcolor="#ddd"></td>
+                                <td>Person</td>
+                            </tr>
+                            <tr>
+                                <td class="color-box" width="30px" bgcolor="#7aecec"></td>
+                                <td>Organization</td>
+                            </tr>
+                            <tr>
+                                <td class="color-box" width="30px" bgcolor="#ff9561"></td>
+                                <td>Location</td>
+                            </tr>
+                            <tr>
+                                <td class="color-box" width="30px" bgcolor="#ffeb80"></td>
+                                <td>Event</td>
+                            </tr>
+                            <tr>
+                                <td class="color-box" width="30px" bgcolor="#bfe1d9"></td>
+                                <td>Date</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {%endif%}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+
+</html>
