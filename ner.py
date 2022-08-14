@@ -5,6 +5,7 @@ from typing import List, Union
 import spacy
 from loguru import logger
 from nepali_stemmer.stemmer import NepStemmer
+from spacy.tokens import Doc
 from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
 
 # for auto coloring
@@ -23,10 +24,6 @@ model = AutoModelForTokenClassification.from_pretrained(path)
 # tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-large")
 tokenizer = AutoTokenizer.from_pretrained(path)
 pipe = pipeline("ner", model, tokenizer=tokenizer, aggregation_strategy="max")
-
-trans = str.maketrans(
-    {"श": "स", "ष": "स", "ी": "ि", "ब": "व", "ू": "ु", "ऊ": "उ", "ई": "इ"}
-)
 
 
 def fix_token_len(texts, entiites):
@@ -91,11 +88,19 @@ def visualize_prediction(texts: Union[List[str], str]):
 nepstem = NepStemmer()
 
 
-def predict(text: str, preprocess: bool = True):
+def predict(text: str, preprocess: bool = False):
     text = nepstem.stem(text)
     if preprocess:
+        logger.debug("Normalizing text")
+        trans = str.maketrans(
+            {"श": "स", "ष": "स", "ी": "ि", "ब": "व", "ू": "ु", "ऊ": "उ", "ई": "इ"}
+        )
         text = text.translate(trans)
-    text = text.strip()
-    doc = visualize_prediction(text)
 
-    return spacy.displacy.render(doc, style="ent")
+    if len(tokenizer.tokenize(text)) > 500:
+        texts = text.split("।")
+    else:
+        texts = [text]
+    texts = list(filter(bool, texts))
+    docs = [visualize_prediction(text.strip()) for text in texts]
+    return spacy.displacy.render(docs, style="ent")
