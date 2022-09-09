@@ -103,4 +103,8 @@ def predict(text: str, preprocess: bool = False):
         texts = [text]
     texts = list(filter(bool, texts))
     docs = [visualize_prediction(text.strip()) for text in texts]
+    return docs
+
+
+def visualize(docs):
     return spacy.displacy.render(docs, style="ent")
