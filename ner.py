@@ -16,10 +16,7 @@ label_map = {
     "Date": "DATE",
     "Event": "EVENT",
 }
-path = os.environ.get(
-    "MODEL_PATH",
-    "/home/bishal/Downloads/models/xlm-lg1/xlm-roberta-large-everestner/checkpoint-5193/",
-)
+path = os.environ.get("MODEL_PATH", "bishaldpande/Ner-xlm-roberta-base")
 model = AutoModelForTokenClassification.from_pretrained(path)
 # tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-large")
 tokenizer = AutoTokenizer.from_pretrained(path)
